@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+int main() 
+{
+  string Card;                        
+  int CardDigit[16];                   
+  int I,K,Sum=0;
+  char CardKey;
+
+    cout << "請輸入16位數信用卡卡號:";
+    Digit_check:                       
+    cin >> Card;
+    cout << "你的信用卡卡號為:"<<Card<<"\n";
+    K=Card.size();                     
+    if ( K != 16 ) {                   
+    cout << "卡號位數錯誤,請輸入16位數信用卡卡號:";
+    goto Digit_check;
+    }
+    for(I=0;I<K;I++){                
+    CardDigit[I] = (Card[I]-'0');
+    }
+    
+  
+    if (CardDigit[0]==4)               
+    CardKey='V';                   
+    else if ((CardDigit[0]==5) && ((1<=CardDigit[1]) && (CardDigit[1]<=5)))
+    CardKey='M';                  
+    else {
+      cout << "這不是正確的Visa或Master信用卡\n"; 
+      return 0;
+    };                 
+    
+    for(I=0;I<K;I=I+2){                 
+    CardDigit[I]= CardDigit[I]*2;            
+    if(CardDigit[I]>=10)
+      CardDigit[I]= (1 + (CardDigit[I]%10));  
+    }
+    
+    for(I=0;I<K;I++){
+    Sum = Sum + CardDigit[I];
+    }
+    if (((Sum%10)==0)&&(CardKey=='V'))    
+    cout << "這是正確的Visa信用卡\n";
+    else if (((Sum%10)==0)&&(CardKey=='M'))
+    cout << "這是正確的Master信用卡\n";
+    else cout << "這不是正確的Visa或Master信用卡\n"; 
+}
